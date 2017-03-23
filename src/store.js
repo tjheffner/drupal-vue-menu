@@ -50,7 +50,7 @@ const actions = {
  * GETTERS
  */
 const getters = {
-  menuOpen: state => state.menuOpen,
+  open: state => state.menuOpen,
   menuItems: state => state.menuItems,
   currentParent: state => state.currentParent,
   findItems: (state, getters) => (menu_name) => {
