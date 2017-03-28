@@ -1,0 +1,7 @@
+langcode: en
+status: true
+dependencies: {  }
+id: side-menu
+label: 'Side Menu'
+description: 'Links for the slide-in hamburger menu'
+locked: false

@@ -37,7 +37,7 @@ const actions = {
     dispatch('setParent', '')
   },
   getMenuItems: ({ commit }) => {
-    $.getJSON('//www.uarts.vm/slidemenu', (data) => {
+    $.getJSON('//www.uarts.vm/menu-items', (data) => {
       commit('ADD_MENU_ITEMS', data)
     })
   },
@@ -63,7 +63,7 @@ const getters = {
     return getters.menuItems.filter(menuItem => menuItem.uuid === state.currentParent)
   },
   mainMenu: (state, getters) => getters.findItems('main'),
-  actionMenu: (state, getters) => getters.findItems('small-main-menu'),
+  utilityMenu: (state, getters) => getters.findItems('utility-links'),
   slideMenu: (state, getters) => getters.findItems('side-menu'),
 }
 

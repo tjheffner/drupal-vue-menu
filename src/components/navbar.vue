@@ -16,7 +16,7 @@
 
     <!-- menu #2 "action menu" -->
     <div class="nav__group">
-      <a v-for="item in actionMenu" v-bind:href="item.link" class="nav__item nav__item-alt">{{ item.title }}</a>
+      <a v-for="item in utilityMenu" v-bind:href="item.link" class="nav__item nav__item-alt">{{ item.title }}</a>
     </div>
 
     <!-- not a menu, holds slide trigger -->
@@ -67,7 +67,7 @@
         'open',
         'menuItems',
         'mainMenu',
-        'actionMenu',
+        'utilityMenu',
         'slideMenu',
         'findChildren',
         'currentParent',

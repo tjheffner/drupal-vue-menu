@@ -1,0 +1,13 @@
+name: 'Drupal Vue Menus'
+type: module
+description: 'Config for decoupling a Drupal menu system with Vue'
+core: 8.x
+dependencies:
+  - block
+  - link
+  - menu_entity_index
+  - menu_link_content
+  - rest
+  - serialization
+  - system
+  - views
