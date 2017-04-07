@@ -37,7 +37,12 @@ const actions = {
     dispatch('setParent', '')
   },
   getMenuItems: ({ commit }) => {
-    $.getJSON('//www.uarts.vm/menu-items', (data) => {
+    // Update this path to whatever your project's REST export view path is.
+    // $.getJSON('//www.d8.vm/menu-items', (data) => {
+    //   commit('ADD_MENU_ITEMS', data)
+    // })
+
+    $.getJSON('./src/assets/menu-items.json', (data) => {
       commit('ADD_MENU_ITEMS', data)
     })
   },
@@ -65,6 +70,7 @@ const getters = {
   mainMenu: (state, getters) => getters.findItems('main'),
   utilityMenu: (state, getters) => getters.findItems('utility-links'),
   slideMenu: (state, getters) => getters.findItems('side-menu'),
+  slideMenuBottom: (state, getters) => getters.findItems('side-menu-bottom')
 }
 
 export default new Vuex.Store({

@@ -1,0 +1,5 @@
+# Compiled output location of dist/build.js is defined in webpack.config.js
+header:
+  js:
+    dist/build.js:
+      preprocess: true

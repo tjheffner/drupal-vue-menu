@@ -4,8 +4,8 @@
     <!-- logo block -->
     <div class="nav__group logo">
       <a href="/">
-        <!--<img class="logo__image" v-bind:src="logoSrc" alt="logo">-->
-        <!--<span class="logo__caption">site logo</span>-->
+        <img class="logo__image" v-bind:src="logoSrc" alt="logo">
+        <span class="logo__caption">Site Name</span>
       </a>
     </div>
 
@@ -14,32 +14,36 @@
       <a v-for="item in mainMenu" v-bind:href="item.link" class="nav__item">{{ item.title }}</a>
     </div>
 
-    <!-- menu #2 "action menu" -->
+    <!-- menu #2 "action menu" [also has search & menu trigger] -->
     <div class="nav__group">
       <a v-for="item in utilityMenu" v-bind:href="item.link" class="nav__item nav__item-alt">{{ item.title }}</a>
-    </div>
-
-    <!-- not a menu, holds slide trigger -->
-    <div class="nav__group">
-      <a href="#" class=" nav__item icon--search">search</a>
-      <a @click="toggleMenu" type="button" class="nav__item nav-menu">{{ open }}</a>
+      <a href="#" class="nav__icon icon--search"></a>
+      <a @click="toggleMenu" type="button" class="nav__icon icon--menu">{{ open }}</a>
     </div>
 
     <!-- menu #3 "side menu", hidden offscreen -->
     <div class="slidemenu" v-bind:class="menuDirection">
-      <span @click="toggleMenu" class="nav__button">X</span>
-      <span v-if="currentParent" @click="setParent('')" class="nav__button"><</span>
+      <div class="slidemenu__controls">
+        <span v-if="currentParent" @click="setParent('')" class="nav__icon icon--arrow--left">back</span>
+        <span @click="toggleMenu" class="nav__icon icon--close">{{ open }}</span>
+      </div>
 
-      <div class="slide-menu__items">
+      <!-- Top level of the slide menu. -->
+      <div class="slidemenu__items">
         <ul v-if="!currentParent">
-          <li @click="setParent(item.uuid)" v-for="item in slideMenu">{{ item.title }}</li>
-          <span class="slide-menu__button"> apply now </span>
+          <li class="slidemenu__item" @click="setParent(item.uuid)" v-for="item in slideMenu">{{ item.title }}</li>
+          <span class="button slidemenu__button">Apply now</span>
+
+          <div class="slidemenu__bottom">
+            <li class="slidemenu__bottomItem" v-for="item in slideMenuBottom"><a v-bind:href="item.link">{{ item.title }}</a></li>
+          </div>
         </ul>
 
+        <!-- Shows up when an item above is clicked. -->
         <div v-if="currentParent">
-          <h2 v-for="item in currentParentItem">{{ item.title }}</h2>
+          <h2 class="slidemenu__parent" v-for="item in currentParentItem">{{ item.title }}</h2>
           <ul>
-            <li v-for="item in findChildren"><a v-bind:href="item.link">{{ item.title }}</a></li>
+            <li class="slidemenu__child" v-for="item in findChildren"><a v-bind:href="item.link">{{ item.title }}</a></li>
           </ul>
         </div>
       </div>
@@ -53,7 +57,7 @@
   export default {
     data() {
       return {
-        logoSrc: '../src/assets/logo.png'
+        logoSrc: './src/assets/logo.png'
       }
     },
     methods: {
@@ -69,12 +73,13 @@
         'mainMenu',
         'utilityMenu',
         'slideMenu',
+        'slideMenuBottom',
         'findChildren',
         'currentParent',
         'currentParentItem',
       ]),
       menuDirection() {
-        return this.$store.getters.open ? 'slide-left':'slide-right'
+        return this.$store.getters.open ? 'slidemenu-left':'slidemenu-right'
       }
     },
     created() {
@@ -88,38 +93,35 @@
     max-width: 100%;
     overflow-x: hidden;
   }
-
   .nav {
     display: flex;
+    justify-content: space-between;
     align-items: center;
-    justify-content: flex-end;
-  }
-  .nav__item {
-    margin-right: 20px;
-  }
-  a.nav__item-alt {
-    color: gray;
-  }
-  .nav__group {
-    margin-left: auto;
-    margin-right: auto;
-  }
-  *:last-child {
-    margin-right: 0;
-  }
-  .nav-menu {
-    cursor: pointer;
-    color: red;
-  }
-  a {
-    text-decoration: none;
-    color: inherit;
-  }
+    height: 80px;
 
-  .nav__button {
-    padding: 25px;
-    cursor: pointer;
-    font-size: 30px;
+    &__group {
+      display: flex;
+      flex-direction: row;
+
+    }
+    &__item {
+      font-size: 16px;
+      text-transform: uppercase;
+      margin-right: 25px;
+
+      &-alt {
+        color: gray;
+        font-weight: 400;
+        margin-right: 15px;
+      }
+    }
+    &__icon {
+      margin-right: 20px;
+      cursor: pointer;
+      &.icon--menu {
+        color: red;
+      }
+    }
   }
 
   .slidemenu {
@@ -128,19 +130,91 @@
     background: white;
     top: 0;
     right: 0;
-    width: 300px;
+    width: 500px;
     z-index: 10;
-    border-left: 1px black solid;
+    box-shadow: -1px 1px 1px #888888;
     padding: 25px;
     overflow: hidden;
-  }
 
-  .slide-right {
-    transition: all .3s ease;
-    right: -350px;
-    opacity: 0;
-  }
-  .slide-left {
-    transition: all .3s ease;
+    &__controls {
+      position: absolute;
+      right: 15px;
+
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+
+      font-size: 36px;
+      font-weight: 200;
+
+      // Keep the icons spaced on the right.
+      .nav__icon {
+        margin-right: 0;
+      }
+      .icon--close {
+        order: -1;
+        padding-bottom: 30px;
+      }
+    }
+    &__items {
+      padding-top: 50px;
+      padding-left: 20px;
+      ul {
+        padding: 0;
+      }
+    }
+    &__item {
+      font-size: 21px;
+      list-style: none;
+      padding-bottom: 25px;
+      cursor: pointer;
+
+      &:after {
+        float: right;
+      }
+    }
+    &__parent {
+      margin-top: 10px;
+      font-size: 30px;
+    }
+    &__child {
+      font-size: 18px;
+      list-style: none;
+      padding-bottom: 25px;
+    }
+    &__button {
+      padding: 12px 25px;
+      padding-right: 40px;
+      color: white;
+      margin-top: 50px;
+
+      &:after {
+        position: absolute;
+        right: 10px;
+        top: 15px;
+      }
+    }
+    &__bottom {
+      display: flex;
+      flex-flow: column wrap;
+      align-content: stretch;
+      margin-top: 50px;
+      height: 100px;
+    }
+    &__bottomItem {
+      font-size: 14px;
+      list-style: none;
+      margin-bottom: 10px;
+    }
+
+    // Menu slide animations.
+    &-right {
+      transition: all .3s ease;
+      right: -550px;
+      opacity: 0;
+    }
+    &-left {
+      transition: all .3s ease;
+    }
   }
 </style>

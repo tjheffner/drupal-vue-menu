@@ -1,0 +1,110 @@
+<?php
+
+/**
+ * @file
+ * Contains install routines for drupal_vue_menu.
+ */
+
+use Drupal\drupal_vue_menu\DefaultMenuItems;
+
+/**
+ * Sets up some default menu items for the navigation system.
+ */
+function drupal_vue_menu_install() {
+  $main_menu = array(
+    "apply" => array(
+      "title" => "Apply",
+      "link" => "/apply",
+    ),
+    "programs" => array(
+      "title" => "Programs",
+      "link" => "/programs",
+    ),
+    "people" => array(
+      "title" => "People",
+      "link" => "/people",
+    ),
+    "gallery" => array(
+      "title" => "Gallery",
+      "link" => "/gallery",
+    ),
+  );
+
+  $utility_links = array(
+    "visit" => array(
+      "title" => "Visit",
+      "link" => "/visit",
+    ),
+    "request-info" => array(
+      "title" => "Request Info",
+      "link" => "/request-info",
+    ),
+    "give" => array(
+      "title" => "Give",
+      "link" => "/give",
+    ),
+  );
+
+  $side_menu = array(
+    "about" => array(
+      "title" => "About",
+      "link" => "/about",
+    ),
+    "admissions" => array(
+      "title" => "Admissions & Aid",
+      "link" => "/admissions",
+    ),
+    "academics" => array(
+      "title" => "Academics",
+      "link" => "/academics",
+    ),
+    "life" => array(
+      "title" => "Student Life",
+      "link" => "/student-life",
+    ),
+    "news" => array(
+      "title" => "News & Events",
+      "link" => "/news",
+    ),
+    "alumni" => array(
+      "title" => "Alumni & Giving",
+      "link" => "/alumni",
+    ),
+    "continuing" => array(
+      "title" => "Continuing Education",
+      "link" => "/continuing",
+    ),
+  );
+
+  $side_menu_bottom = array(
+    "directory" => array(
+      "title" => "Directory",
+      "link" => "/directory",
+    ),
+    "uarts-portal" => array(
+      "title" => "Site Portal",
+      "link" => "/portal",
+    ),
+    "gallery" => array(
+      "title" => "Gallery of work",
+      "link" => "/gallery",
+    ),
+    "parents" => array(
+      "title" => "Parents & Families",
+      "link" => "/families",
+    ),
+    "accepted" => array(
+      "title" => "Accepted Students",
+      "link" => "/incoming-students",
+    ),
+    "corzo" => array(
+      "title" => "Event Center",
+      "link" => "/events",
+    ),
+  );
+
+  DefaultMenuItems::create($main_menu, 'main');
+  DefaultMenuItems::create($utility_links, 'utility-links');
+  DefaultMenuItems::create($side_menu, 'side-menu');
+  DefaultMenuItems::create($side_menu_bottom, 'side-menu-bottom');
+}

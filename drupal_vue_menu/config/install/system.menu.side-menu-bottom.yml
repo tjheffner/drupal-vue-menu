@@ -1,0 +1,7 @@
+langcode: en
+status: true
+dependencies: {  }
+id: side-menu-bottom
+label: 'Side Menu (Bottom)'
+description: 'The small links that appear at the bottom of the slide-out menu.'
+locked: false
